@@ -4,20 +4,29 @@
 {
   home.username = "cory";
   home.homeDirectory = "/home/cory";
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    packageOverrides = pkgs: {
+      _1password = pkgs._1password;
+    };
+  };
+
   home.packages = with pkgs; [
     git
-    vim
     neovim
     tmux
+    _1password
   ];
 
   programs.zsh = {
-    enable = true
+    enable = true;
     oh-my-zsh = {
       enable = true;
       theme = "half-life";
     };
-  }
+  };
+
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
@@ -25,12 +34,10 @@
     userEmail = "cory@twitty.codes";
   };
 
-  services.gpg-agnet = {
+  services.gpg-agent = {
     enable = true;
     defaultCacheTtl = 1800;
-    enableSSHSupport = true;
   };
-
 
   home.stateVersion = "24.11";
 }
